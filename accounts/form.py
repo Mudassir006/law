@@ -1,8 +1,10 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.db import transaction
-from .models import User, Client, Lawyer
+from django.forms import NumberInput
 
+from .models import User, Client, Lawyer
+c = [('male','Male'),('female','Female'),('other','Other')]
 
 class ClientSignUpForm(UserCreationForm):
     first_name = forms.CharField(required=True)
@@ -40,14 +42,14 @@ class LawyerSignUpForm(UserCreationForm):
     city = forms.CharField(required=True)
     state = forms.CharField(required=True)
     postal_code = forms.CharField(required=True)
-    cnic = forms.CharField(required=True)
-    date_of_birth = forms.CharField(required=True)
+    cnic = forms.CharField(required=True,widget=NumberInput(attrs={'placeholder':'12345-1234567-1'}))
+    date_of_birth = forms.DateField(required=True,widget=NumberInput(attrs={'type':'date'}))
     marital_status = forms.CharField(required=True)
-    gender = forms.CharField(required=True)
+    gender = forms.ChoiceField(required=True,choices=c)
     qualification = forms.CharField(required=True)
     university = forms.CharField(required=True)
-    degree_start_from = forms.CharField(required=True)
-    degree_end = forms.CharField(required=True)
+    degree_start_from = forms.DateField(required=True,widget=NumberInput(attrs={'type':'date'}))
+    degree_end = forms.DateField(required=True,widget=NumberInput(attrs={'type':'date'}))
     practice = forms.CharField(required=True)
     bar_council = forms.CharField(required=True)
     enrolment_year = forms.CharField(required=True)

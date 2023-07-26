@@ -1,4 +1,4 @@
-
+{% load static %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -82,6 +82,9 @@
 
   </head>
   <body>
+{% include 'clientnav.html' %}
+
+
 
 
 
@@ -102,42 +105,24 @@
     </div>
   </section>
 
-  <div class="album py-5 bg-dark">
-    <div class="container">
-
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-          {% for lawyer in lawyers %}
-
-
-
-
-        <div class="col">
-          <div class="card shadow-sm">
-            <div class="card-body bg-dark">
-              <p class="card-text" style="color: white">
-                  {{ lawyer.user.first_name }}
-                  {{ lawyer.user.last_name }}
-                  <p>
-                {{ lawyer.practice }}
-            </p>
-
-              </p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                    <a href="{% url 'detail' %}" class="btn-warning"> View </a>
-
-                </div>
-                <small style="color: white">Last Login   {{ lawyer.user.last_login.time}}</small>
-              </div
-            </div>
-          </div>
-        </div>
-          {% endfor %}
-
-      </div>
+  <div class="container mt-5">
+  <!-- Loop through user profiles and generate cards -->
+  {% for lawyer in lawyers %}
+  <div class="card bg-dark" style="width: 18rem;">
+    <!-- User Image -->
+    <img src="{{ lawyer.user.image.url }}" class="card-img-top" alt="User Image">
+    <div class="card-body">
+      <!-- User Name -->
+      <h5 class="card-title">{{ lawyer.user.first_name }}</h5>
+      <!-- User Details -->
+      <p class="card-text">Designation: {{ lawyer.designation }}</p>
+      <p class="card-text">Location: {{ lawyer.city }}</p>
+      <!-- Contact Button -->
+      <a href="#" class="btn btn-primary">Contact</a>
     </div>
   </div>
-
+      {% endfor %}
+</div>
 </main>
 
 <footer id="footer" >
@@ -213,6 +198,7 @@
 
 
     <script src="../static/assets/js/bootstrap.bundle.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
   </body>

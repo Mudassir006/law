@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.views.generic import CreateView
 from .form import ClientSignUpForm, LawyerSignUpForm
 from django.contrib.auth.forms import AuthenticationForm
-from .models import User, Lawyer
+from .models import User, Lawyer, Client
 
 
 def register(request):
@@ -16,7 +16,16 @@ def base(request):
 
 
 def main(request):
-    return render(request, 'lawyerhome.html')
+    lawyer = request.user.lawyer
+    return render(request, 'lawyerhome.html',context={'lawyer':lawyer})
+
+def clienthome(request,):
+    lawyers = Lawyer.objects.all()
+    client = request.user.client
+
+    context = {'lawyers': lawyers , 'client':client}
+
+    return render(request, 'clienthome.html', context ,)
 
 
 class client_register(CreateView):
@@ -67,15 +76,10 @@ def logout_view(request):
     return redirect('/')
 
 
-def clienthome(request):
-    lawyers = Lawyer.objects.all()
 
-    context = {'lawyers': lawyers}
-
-    return render(request, 'clienthome.html', context)
 
 
 def LawyerDetail(request, pk):
     lawyer = Lawyer.objects.get(id=pk)
 
-    return render(request, 'lawyerdetail.html', context={"lawyer", lawyer})
+    return render(request, 'lawyerdetail.html', context={"lawyer":lawyer})
