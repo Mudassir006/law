@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Add your head content here -->
+</head>
+<body>
+  <!-- Add your navbar and other content here -->
+
+  <!-- Display conversation details -->
+  <div class="container mt-5">
+    <h2>Conversation with {{ conversation.participants.exclude(id=request.user.id).first }}</h2>
+    <ul>
+      {% for message in messages %}
+        <li>
+          {% if message.sender == request.user %}
+            <strong>You ({{ message.timestamp }}):</strong>
+          {% else %}
+            <strong>{{ message.sender.username }} ({{ message.timestamp }}):</strong>
+          {% endif %}
+          {{ message.content }}
+        </li>
+      {% endfor %}
+    </ul>
+    <!-- Form to send a reply message -->
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Send Reply">
+    </form>
+  </div>
+
+  <!-- Add your scripts and footer content here -->
+</body>
+</html>

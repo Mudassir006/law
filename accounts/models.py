@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -7,7 +8,7 @@ class User(AbstractUser):
     is_lawyer = models.BooleanField(default=False)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    image = models.ImageField( null=True)
+    image = models.ImageField(null=True)
 
 
 class Client(models.Model):
@@ -40,3 +41,19 @@ class Lawyer(models.Model):
     license_number = models.CharField(max_length=10)
     current_firm = models.CharField(max_length=50)
     Expertise = models.CharField(max_length=20)
+
+
+# models.py
+
+
+
+
+class Conversation(models.Model):
+    participants = models.ManyToManyField(User)
+
+class Message(models.Model):
+    conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    file = models.FileField(upload_to='message_files/', null=True, blank=True)

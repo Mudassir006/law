@@ -3,7 +3,8 @@ from django import forms
 from django.db import transaction
 from django.forms import NumberInput
 
-from .models import User, Client, Lawyer
+from .models import User, Client, Lawyer, Message
+
 c = [('male','Male'),('female','Female'),('other','Other')]
 
 class ClientSignUpForm(UserCreationForm):
@@ -95,3 +96,10 @@ class LawyerSignUpForm(UserCreationForm):
 
         lawyer.save()
         return user
+
+class MessageForm(forms.ModelForm):
+    content = forms.CharField(widget=forms.Textarea)
+    file = forms.FileField(required=False)
+    class Meta:
+        model = Message
+        fields = ['content', 'file']

@@ -1,0 +1,19 @@
+<!-- reply_message.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reply Message</title>
+</head>
+<body>
+  <form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="hidden" name="conversation_id" value="{{ conversation.id }}">
+  {{ form.as_p }}
+  <button type="submit">Send</button>
+</form>
+
+
+</body>
+</html>
